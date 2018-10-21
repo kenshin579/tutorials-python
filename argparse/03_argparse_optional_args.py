@@ -12,7 +12,7 @@ Short Option 추가하려면
 '''
 
 parser = argparse.ArgumentParser()
-parser.add_argument("-v", "--verbosity", action='store_true', help="increase output verbosity")
+parser.add_argument("-v", "--verbosity", action='store_true', help="enable verbosity")
 args = parser.parse_args()
 if args.verbosity:
-    print("verbosity turned on")
+    print("verbosity enabled")

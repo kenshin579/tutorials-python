@@ -3,7 +3,7 @@
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument("-v", "--verbose", action="store_true")
+parser.add_argument("-v", "--verbose", action="store_true", help="enable verbosity")
 parser.add_argument('-t', action='store', dest='title', type=str, required=True)
 parser.add_argument('-m', action='store', dest='msg', type=str, required=True)
 args = parser.parse_args()

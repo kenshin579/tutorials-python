@@ -14,7 +14,7 @@ parser.add_argument("square", type=int,
 parser.add_argument("-v", "--verbosity", type=int, choices=[0, 1, 2],
                     help="increase output verbosity")
 args = parser.parse_args()
-answer = args.square**2
+answer = args.square ** 2
 if args.verbosity == 2:
     print("the square of {} equals {}".format(args.square, answer))
 elif args.verbosity == 1:

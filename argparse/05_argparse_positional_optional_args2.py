@@ -15,7 +15,7 @@ parser.add_argument("-v", "--verbosity", action="count", default=0,
                     help="increase output verbosity")
 args = parser.parse_args()
 print("args.verbosity", args.verbosity)
-answer = args.square**2
+answer = args.square ** 2
 if args.verbosity >= 2:
     print("the square of {} equals {}".format(args.square, answer))
 elif args.verbosity >= 1:
