@@ -8,9 +8,11 @@ class WebScrapingTest(unittest.TestCase):
     FILE_URL = "main_news.html"
 
     def setUp(self):
+        print('setUp called')
         pass
 
     def tearDown(self):
+        print('tearDown called')
         pass
 
     def test_(self):
