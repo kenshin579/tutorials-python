@@ -10,6 +10,9 @@ class TestLambda(unittest.TestCase):
         plus_ten_lambda = lambda x: x + 10
         self.assertEqual(plus_ten_lambda(1), lambda_expr.plus_ten(1))
 
+    def test_lambda2(self):
+        self.assertEqual((lambda x: x + 10)(1), lambda_expr.plus_ten(1))
+
 
 if __name__ == '__main__':
     unittest.main()
