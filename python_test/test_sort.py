@@ -15,13 +15,21 @@ class SortTest(unittest.TestCase):
     def setup(self):
         print('setUp is called')
 
+    def test_simple_sort(self):
+        a_list = [3, 2, 1, 7]
+        a_list.sort()
+        self.assertEqual(a_list, [1, 2, 3, 7])
+
+    def test_simple_sorted(self):
+        a_list = [3, 2, 1, 7]
+        new_list = sorted(a_list)
+        self.assertEqual(new_list, [1, 2, 3, 7])
 
     def test_sort_list_by_age_using_lambda(self):
         result = sort.sort_list_by_age_using_lambda(self.student_list)
         for i in range(len(result) - 1):
             print(i, result[i].get('age'))
             self.assertLess(result[i].get('age'), result[i + 1].get('age'))
-
 
     def test_sort_list_by_age_using_itemgetter(self):
         result = sort.sort_list_by_age_using_itemgetter(self.student_list)
@@ -36,7 +44,6 @@ class SortTest(unittest.TestCase):
             print(i, result[i].get('age'))
             self.assertLess(result[i].get('age'), result[i + 1].get('age'))
 
-
     def test_sort_list_by_two_keys_using_itemgetter(self):
         student_list = [
             {'name': 'Homer', 'age': 39},
@@ -50,7 +57,6 @@ class SortTest(unittest.TestCase):
                 self.assertLess(result[i].get('name'), result[i + 1].get('name'))
             else:
                 self.assertLess(result[i].get('age'), result[i + 1].get('age'))
-
 
     def test_sort_list_by_two_keys_using_lambda(self):
         student_list = [
