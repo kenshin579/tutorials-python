@@ -3,7 +3,6 @@ from _operator import itemgetter
 
 
 def sort_list_by_age_using_lambda(student_list):
-    print('list', student_list)
     return sorted(student_list, key=lambda k: k['age'])
 
 def sort_list_by_two_keys_using_lambda(student_list):
