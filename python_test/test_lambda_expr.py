@@ -5,12 +5,14 @@ from functools import reduce
 
 class TestLambda(unittest.TestCase):
 
-    def test_lambda_single_parameter(self):
+    def test_lambda_single_parameter1(self):
         plus_ten_lambda = lambda x: x + 10
         result = plus_ten_lambda(1)
-        result2 = (lambda x: x + 10)(1)
         self.assertEqual(result, 11)
-        self.assertEqual(result2, 11)
+
+    def test_lambda_single_parameter2(self):
+        result = (lambda x: x + 10)(1)
+        self.assertEqual(result, 11)
 
     def test_lambda_multiple_parameters(self):
         result = (lambda x, y: x + y)(1, 2)
