@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-docker run kenshin579/advenoh:python-hello
+docker run --platform linux/x86-64 kenshin579/advenoh:python-hello
