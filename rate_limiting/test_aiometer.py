@@ -46,7 +46,7 @@ class AiometerTest(TestCase):
         tasks = [functools.partial(self.fetch_stock_current_price, code) for code in stock_list]
 
         # run the tasks concurrently
-        results = await aiometer.run_all(tasks, max_per_second=self.max_per_second, max_at_once=self.max_at_once, )
+        results = await aiometer.run_all(tasks, max_per_second=self.max_per_second, max_at_once=self.max_at_once)
 
         for result in results:
             print(result)
