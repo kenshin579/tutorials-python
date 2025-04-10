@@ -146,6 +146,7 @@ def main():
     for result in search_results:
         print(result)
 
+    fetcher.print_stats()
     elapsed_time = time.time() - start_time
     print(f"총 실행 시간: {elapsed_time:.2f}초, 요청 수: {len(stock_codes)}")
 
