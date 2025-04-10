@@ -90,7 +90,7 @@ class StockFetcher:
 
         end_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-3]
         self.logger.info(f"호출 완료: {stock_code} - {end_time}")
-        return f"{stock_code}:{random.uniform(1, 100)}"
+        return f"quote:{stock_code}:{random.uniform(1, 100)}"
 
     def __fetch_stock_info(self, stock_code):
         self.rate_limiter.acquire()
@@ -103,7 +103,7 @@ class StockFetcher:
 
         end_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-3]
         self.logger.info(f"호출 완료: {stock_code} - {end_time}")
-        return f"{stock_code}:{random.uniform(1, 100)}"
+        return f"stock_info:{stock_code}:{random.uniform(1, 100)}"
 
     def _execute_concurrent_requests(self, method, stock_codes):
         futures = [self.executor.submit(method, code) for code in stock_codes]
