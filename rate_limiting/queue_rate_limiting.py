@@ -69,53 +69,88 @@ class RateLimiter:
 
 
 class StockFetcher:
-    def __init__(self, rate_limiter):
-        self.rate_limiter = rate_limiter
+    def __init__(self):
+        max_calls = 20
+        self.rate_limiter = RateLimiter(max_calls=5 , per_seconds=1)
+        self.executor = ThreadPoolExecutor(max_workers=max_calls)
+
         # 로깅 설정
         logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s')
         self.logger = logging.getLogger(__name__)
 
-    def fetch_stock_current_price(self, stock_code):
+
+    def __fetch_stock_quote(self, stock_code):
         self.rate_limiter.acquire()
 
-        url = "http://httpbin.org/get"
         start_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-3]
         self.logger.info(f"호출 시작: {stock_code} - {start_time}")
-
-
-        response = requests.get(url)
-        data = response.json()
 
         wait_time = random.uniform(1, 2)
         time.sleep(wait_time)
 
         end_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-3]
         self.logger.info(f"호출 완료: {stock_code} - {end_time}")
-        return data
+        return f"{stock_code}:{random.uniform(1, 100)}"
+
+    def __fetch_stock_info(self, stock_code):
+        self.rate_limiter.acquire()
+
+        start_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-3]
+        self.logger.info(f"호출 시작: {stock_code} - {start_time}")
+
+        wait_time = random.uniform(1, 2)
+        time.sleep(wait_time)
+
+        end_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-3]
+        self.logger.info(f"호출 완료: {stock_code} - {end_time}")
+        return f"{stock_code}:{random.uniform(1, 100)}"
+
+    def _execute_concurrent_requests(self, method, stock_codes):
+        futures = [self.executor.submit(method, code) for code in stock_codes]
+        results = [future.result() for future in futures]
+
+        return results[0] if len(results) == 1 else results
+
+    def fetch_stock_quotes(self, stock_codes):
+        """여러 주식 시세를 동시에 조회"""
+        return self._execute_concurrent_requests(self.__fetch_stock_quote, stock_codes)
+
+    def fetch_stock_infos(self, stock_codes):
+        """여러 주식 정보를 동시에 조회"""
+        return self._execute_concurrent_requests(self.__fetch_stock_info, stock_codes)
+
+    def print_stats(self):
+        """호출 통계 출력"""
+        self.rate_limiter.print_stats()
+
+    def shutdown(self):
+        self.executor.shutdown(wait=True)
 
 
 def main():
-    rate_limiter = RateLimiter(max_calls=20, per_seconds=1)
-    fetcher = StockFetcher(rate_limiter)
+    fetcher = StockFetcher()
 
     # 테스트 용으로 더 많은 요청 생성 (50개 -> 100개)
-    stock_codes = [f"STOCK{i}" for i in range(100)]
+    stock_codes = [f"STOCK{i}" for i in range(20)]
     start_time = time.time()
 
-    with ThreadPoolExecutor(max_workers=20) as executor:  # 스레드 수 증가
-        futures = [executor.submit(fetcher.fetch_stock_current_price, code) for code in stock_codes]
 
-        # 모든 스레드가 완료될 때까지 대기
-        for future in futures:
-            result = future.result()
-            print(result)
+    # 주식 시세 조회
+    quote_results = fetcher.fetch_stock_quotes(stock_codes)
+    search_results = fetcher.fetch_stock_infos(stock_codes)
+
+    # 결과 출력
+    for result in quote_results:
+        print(result)
+
+    for result in search_results:
+        print(result)
 
     elapsed_time = time.time() - start_time
     print(f"총 실행 시간: {elapsed_time:.2f}초, 요청 수: {len(stock_codes)}")
 
-    # 통계 출력
-    rate_limiter.print_stats()
-
+    # 명시적으로 executor 종료 (선택 사항)
+    fetcher.shutdown()
 
 if __name__ == "__main__":
     main()
