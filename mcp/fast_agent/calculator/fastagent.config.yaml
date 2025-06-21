@@ -11,6 +11,7 @@
 # Can be overriden with a command line switch --model=<model>, or within the Agent constructor.
 
 default_model: openai.gpt-4.1-nano
+#default_model: generic.llama3.2
 
 # Logging and Console Configuration:
 logger:
