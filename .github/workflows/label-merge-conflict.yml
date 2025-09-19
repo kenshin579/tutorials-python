@@ -1,0 +1,11 @@
+name: Label Merge Conflict
+
+on:
+  pull_request:
+    branches:
+    - master
+
+jobs:
+  auto-label:
+    uses: kenshin579/actions/.github/workflows/label-merge-conflict.yml@main
+    secrets: inherit
