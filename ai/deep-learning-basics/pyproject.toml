@@ -1,0 +1,12 @@
+[project]
+name = "deep-learning-basics"
+version = "0.1.0"
+description = "PyTorch와 FashionMNIST를 활용한 딥러닝 기초 학습 노트북"
+requires-python = ">=3.11"
+dependencies = [
+    "torch>=2.0.0",
+    "torchvision>=0.15.0",
+    "matplotlib>=3.7.0",
+    "numpy>=1.24.0",
+    "Pillow>=9.5.0",
+]
