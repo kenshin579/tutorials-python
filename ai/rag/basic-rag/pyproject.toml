@@ -1,0 +1,11 @@
+[project]
+name = "basic-rag"
+version = "0.1.0"
+description = "최소 MVP RAG 챗봇 - 단일 파일로 동작하는 기본 RAG 예제"
+requires-python = ">=3.11"
+dependencies = [
+    "langchain>=0.3.0",
+    "langchain-openai>=0.3.0",
+    "langchain-chroma>=0.2.0",
+    "langchain-community>=0.3.0",
+]
