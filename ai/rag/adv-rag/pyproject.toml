@@ -1,0 +1,14 @@
+[project]
+name = "adv-rag"
+version = "0.1.0"
+description = "RAG 최적화 샘플 코드 - 프롬프트 엔지니어링, Hybrid Search, Re-ranking, RAGAS 평가"
+requires-python = ">=3.11"
+dependencies = [
+    "langchain>=0.3.0",
+    "langchain-openai>=0.3.0",
+    "langchain-chroma>=0.2.0",
+    "langchain-community>=0.3.0",
+    "langchain-cohere>=0.4.0",
+    "rank-bm25>=0.2.0",
+    "ragas>=0.2.0",
+]
