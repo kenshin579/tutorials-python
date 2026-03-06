@@ -1,0 +1,7 @@
+structlog
+loguru
+colorlog
+pyyaml
+fastapi
+uvicorn
+python-json-logger

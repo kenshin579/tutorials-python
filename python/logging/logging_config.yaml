@@ -1,0 +1,36 @@
+version: 1
+disable_existing_loggers: false
+
+formatters:
+  simple:
+    format: "%(levelname)-8s %(message)s"
+  detailed:
+    format: "%(asctime)s [%(name)s] %(levelname)-8s %(filename)s:%(lineno)d - %(message)s"
+    datefmt: "%Y-%m-%d %H:%M:%S"
+
+handlers:
+  console:
+    class: logging.StreamHandler
+    level: DEBUG
+    formatter: simple
+    stream: ext://sys.stdout
+  file:
+    class: logging.FileHandler
+    level: INFO
+    formatter: detailed
+    filename: /tmp/yaml_config_app.log
+    encoding: utf-8
+
+loggers:
+  app:
+    level: DEBUG
+    handlers: [console, file]
+    propagate: false
+  app.api:
+    level: INFO
+    handlers: [console]
+    propagate: false
+
+root:
+  level: WARNING
+  handlers: [console]
