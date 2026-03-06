@@ -1,0 +1,21 @@
+# mypy 설정 샘플 — pyproject.toml
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+
+# 핵심 옵션 (strict=true에 포함됨)
+warn_return_any = true
+disallow_untyped_defs = true
+disallow_any_generics = true
+check_untyped_defs = true
+warn_unused_ignores = true
+
+# per-module 설정
+[[tool.mypy.overrides]]
+module = "tests.*"
+disallow_untyped_defs = false
+
+[[tool.mypy.overrides]]
+module = "third_party_lib.*"
+ignore_missing_imports = true
