@@ -1,0 +1,6 @@
+pydantic>=2.0
+pydantic-settings
+pydantic[email]
+pytest
+fastapi
+httpx
