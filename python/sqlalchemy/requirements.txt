@@ -1,0 +1,9 @@
+sqlalchemy>=2.0
+sqlmodel
+aiosqlite
+greenlet
+alembic
+fastapi
+httpx
+pytest
+pytest-asyncio
