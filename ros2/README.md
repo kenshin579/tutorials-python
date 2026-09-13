@@ -10,7 +10,7 @@
 | 패키지 | 빌드 타입 | 내용 |
 |---|---|---|
 | `tutorial_interfaces` | ament_cmake | 커스텀 메시지 `SensorReading` 정의 |
-| `py_pubsub` | ament_python | 온도 센서 publisher / subscriber 노드 (2편) |
+| `py_pubsub` | ament_python | 온도 센서 publisher / subscriber 노드 (2편), launch·파라미터 파일 (3편) |
 
 ## 빌드
 
@@ -40,6 +40,22 @@ ros2 run py_pubsub listener
 ```bash
 ros2 run py_pubsub talker --ros-args -p sensor_id:=sensor-99 -p warning_threshold:=25.0
 ```
+
+## launch 로 한 번에 실행 (3편)
+
+```bash
+# 발행/구독 노드 동시 실행
+ros2 launch py_pubsub temperature_launch.py
+
+# 파라미터 파일 + 네임스페이스 + launch 인자
+ros2 launch py_pubsub temperature_params_launch.py
+ros2 launch py_pubsub temperature_params_launch.py room:=bedroom
+ros2 launch py_pubsub temperature_params_launch.py --show-args
+```
+
+`config/temperature_params.yaml` 의 키가 `/**/temperature_publisher` 인 이유는 노드가 네임스페이스
+(`living_room`, `bedroom` 등) 안에서 실행되기 때문이다. 키가 실제 노드 이름과 맞지 않으면 파라미터는
+경고 없이 무시된다.
 
 ## 확인용 명령어
 
