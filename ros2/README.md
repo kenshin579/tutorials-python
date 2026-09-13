@@ -11,6 +11,7 @@
 |---|---|---|
 | `tutorial_interfaces` | ament_cmake | 커스텀 메시지 `SensorReading` 정의 |
 | `py_pubsub` | ament_python | 온도 센서 publisher / subscriber 노드 (2편), launch·파라미터 파일 (3편) |
+| `py_tf_demo` | ament_python | TF2 좌표 변환 예제 - static/dynamic broadcaster, listener (4편) |
 
 ## 빌드
 
@@ -56,6 +57,24 @@ ros2 launch py_pubsub temperature_params_launch.py --show-args
 `config/temperature_params.yaml` 의 키가 `/**/temperature_publisher` 인 이유는 노드가 네임스페이스
 (`living_room`, `bedroom` 등) 안에서 실행되기 때문이다. 키가 실제 노드 이름과 맞지 않으면 파라미터는
 경고 없이 무시된다.
+
+## TF2 예제 실행 (4편)
+
+```bash
+# 브로드캐스터 2개 + 리스너 동시 실행
+ros2 launch py_tf_demo tf_demo_launch.py
+
+# 두 프레임 사이 변환 확인
+ros2 run tf2_ros tf2_echo odom laser
+
+# 프레임 트리를 PDF 로 저장
+ros2 run tf2_tools view_frames
+
+# RViz 로 보기 (Fixed Frame 을 odom 으로, Add > TF)
+rviz2
+```
+
+`odom -> base_link` 는 반지름 2m 원운동(동적), `base_link -> laser` 는 고정 오프셋(static)이다.
 
 ## 확인용 명령어
 
