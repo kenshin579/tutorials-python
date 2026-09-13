@@ -1,0 +1,7 @@
+# 키는 노드 이름이다. 앞의 /** 는 "어떤 네임스페이스에 있든" 이라는 뜻이고,
+# 네임스페이스를 쓰지 않는다면 temperature_publisher: 만 적어도 된다.
+/**/temperature_publisher:
+  ros__parameters:
+    sensor_id: "living-01"
+    publish_period: 1.0
+    warning_threshold: 28.0
