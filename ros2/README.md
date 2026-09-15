@@ -76,6 +76,40 @@ rviz2
 
 `odom -> base_link` 는 반지름 2m 원운동(동적), `base_link -> laser` 는 고정 오프셋(static)이다.
 
+## Gazebo + TurtleBot3 (5편)
+
+패키지 설치 후 모델을 환경 변수로 지정한다.
+
+```bash
+sudo apt install ros-jazzy-ros-gz ros-jazzy-turtlebot3 ros-jazzy-turtlebot3-gazebo ros-jazzy-turtlebot3-msgs
+export TURTLEBOT3_MODEL=burger
+```
+
+```bash
+# 시뮬레이션 실행
+ros2 launch turtlebot3_gazebo turtlebot3_world.launch.py
+
+# 키보드 조종
+ros2 run turtlebot3_teleop teleop_keyboard
+
+# 명령으로 직접 주행 (Jazzy 는 Twist 가 아니라 TwistStamped 다)
+ros2 topic pub -r 10 /cmd_vel geometry_msgs/msg/TwistStamped \
+  "{header: {frame_id: base_link}, twist: {linear: {x: 0.2}, angular: {z: 0.3}}}"
+
+# 라이다 확인
+ros2 topic echo /scan --once
+```
+
+GUI 없이 서버만 띄우려면 (GPU 없는 환경, 원격 접속 등):
+
+```bash
+export GZ_SIM_RESOURCE_PATH=/opt/ros/jazzy/share/turtlebot3_gazebo/models
+ros2 launch ros_gz_sim gz_sim.launch.py \
+  gz_args:="-r -s -v2 /opt/ros/jazzy/share/turtlebot3_gazebo/worlds/turtlebot3_world.world"
+ros2 launch turtlebot3_gazebo spawn_turtlebot3.launch.py
+ros2 launch turtlebot3_gazebo robot_state_publisher.launch.py use_sim_time:=true
+```
+
 ## 확인용 명령어
 
 ```bash
