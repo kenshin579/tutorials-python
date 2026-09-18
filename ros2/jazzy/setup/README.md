@@ -10,7 +10,7 @@ ROS2 설치부터 TurtleBot3 Gazebo 시뮬레이션 실행까지 한 번에 처�
 ## 실행
 
 ```bash
-cd setup
+cd ros2/jazzy/setup
 ./install_ros2_turtlebot3.sh
 ```
 
