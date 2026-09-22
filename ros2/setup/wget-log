@@ -1,0 +1,11 @@
+--2026-09-18 20:44:37--  https://packages.osrfoundation.org/gazebo.gpg
+Resolving packages.osrfoundation.org (packages.osrfoundation.org)... 52.52.171.73
+Connecting to packages.osrfoundation.org (packages.osrfoundation.org)|52.52.171.73|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 1222 (1.2K) [application/octet-stream]
+Saving to: ‘/usr/share/keyrings/pkgs-osrf-archive-keyring.gpg’
+
+     0K .                                                     100%  825M=0s
+
+2026-09-18 20:44:38 (825 MB/s) - ‘/usr/share/keyrings/pkgs-osrf-archive-keyring.gpg’ saved [1222/1222]
+
