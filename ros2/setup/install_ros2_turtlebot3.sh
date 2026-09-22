@@ -104,16 +104,29 @@ else
   PKGS+=( ros-humble-gazebo-ros-pkgs )           # Gazebo Classic
 fi
 
-MISSING=()
+# 배포판마다 apt 에 없는 패키지가 있다(예: Jazzy 의 cartographer_ros).
+# 하나가 없다고 전체가 죽으면 안 되므로 개별 설치하고 실패는 모아서 보고한다.
+INSTALLED=0; SKIPPED=0; FAILED_PKGS=()
 for p in "${PKGS[@]}"; do
-  dpkg -s "$p" >/dev/null 2>&1 || MISSING+=("$p")
+  if dpkg -s "$p" >/dev/null 2>&1; then
+    SKIPPED=$((SKIPPED+1)); continue
+  fi
+  if sudo apt-get install -y -qq "$p" >/dev/null 2>&1; then
+    INSTALLED=$((INSTALLED+1))
+  else
+    FAILED_PKGS+=("$p")
+  fi
 done
-if (( ${#MISSING[@]} )); then
-  sudo apt-get install -y "${MISSING[@]}"
-  c_ok "${#MISSING[@]}개 패키지 설치"
-else
-  c_ok "이미 모두 설치됨"
+c_ok "설치 ${INSTALLED} / 기존 ${SKIPPED} / 실패 ${#FAILED_PKGS[@]}"
+if (( ${#FAILED_PKGS[@]} )); then
+  c_w "apt 에서 찾지 못한 패키지: ${FAILED_PKGS[*]}"
+  c_w "시뮬레이션 실행에는 대부분 지장 없다. 계속 진행한다."
 fi
+
+# 시뮬레이션에 반드시 필요한 것만 별도로 확인한다.
+for p in ros-${ROS_DISTRO}-turtlebot3-msgs; do
+  dpkg -s "$p" >/dev/null 2>&1 || die "필수 패키지 $p 설치 실패. apt 저장소 상태를 확인하세요."
+done
 
 # ---------- 5. rosdep ----------
 c_i "rosdep 초기화"
